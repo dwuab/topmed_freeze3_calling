@@ -113,7 +113,9 @@ uint32_t LogTool::prob2pl(double x)
         exit(1);
     }
 
-    return (uint32_t) (round(-10*std::log10(x)));
+    double ret = round(-10*std::log10(x));
+    if (isinf(ret) or ret > 255) return 255; // 256 is maximal phred-score
+    else return (uint32_t) ret;
 }
 
 /**
